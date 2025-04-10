@@ -27,11 +27,11 @@ export const postLogin = async (ctx: RouterContext) => {
     if (!user) {
         ctx.response.body = await renderFileToString(
         `${Deno.cwd()}/views/login.ejs`,
-        { error: "Incorrect username",},
+        { error: "Incorrect username"},
         );
     } else if (!compareSync(password, user.password)) {
         ctx.response.body = await renderFileToString(`${Deno.cwd()}/views/login.ejs`,
-         {error: "Incorrect password",},
+         {error: "Incorrect password"},
         );
     } else {
       console.log("Success"); 
