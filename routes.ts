@@ -1,8 +1,19 @@
 import { RouterContext } from "@oak/oak/router"; 
 import { renderFileToString } from "@hongminhee/dejs";
 import { hashSync, compareSync } from "@da/bcrypt";
+import { create, Header, Payload } from "@zaubrik/djwt";
 import { users, User } from './users.ts';
 
+const key = await crypto.subtle.generateKey(
+    { name: "HMAC", hash: "SHA-256" },
+    true,
+    ["sign", "verify"],
+  );
+  
+const header: Header = {
+    alg: 'HS256',
+    typ: 'JWT'
+  };
 
 export const home = async  (ctx: RouterContext) => {
     ctx.response.body = await renderFileToString(`${Deno.cwd()}/views/home.ejs`, {});
@@ -40,7 +51,14 @@ export const postLogin = async (ctx: RouterContext) => {
         await wait();
     } else {
       console.log("Success"); 
-    }
+      const payload: Payload = {
+        iss: user.name,
+        exp: new Date().getTime() + 120000
+      };
+      const jwt = await create(header, payload, key);
+      ctx.cookies.set('jwt', jwt)
+      ctx.response.redirect('/protectedRoute');
+    }  
 }
 export const postRegister = async (ctx: RouterContext) => {
     if (ctx.request.hasBody) {

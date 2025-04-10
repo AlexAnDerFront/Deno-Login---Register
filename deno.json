@@ -2,6 +2,7 @@
   "imports": {
     "@da/bcrypt": "jsr:@da/bcrypt@^1.0.1",
     "@hongminhee/dejs": "jsr:@hongminhee/dejs@^0.10.5+jsr.1",
-    "@oak/oak": "jsr:@oak/oak@^17.1.4"
+    "@oak/oak": "jsr:@oak/oak@^17.1.4",
+    "@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2"
   }
 }

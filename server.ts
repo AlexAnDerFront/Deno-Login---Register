@@ -9,7 +9,7 @@ router
     .get("/", home)
     .get("/login", login)
     .get("/register", register)
-    .get("/protected", protectedRoute)
+    .get("/protectedRoute", protectedRoute)
     .post("/login", postLogin)
     .post("/register", postRegister)
     .get('/logout', logout)
