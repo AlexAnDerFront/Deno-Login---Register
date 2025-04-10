@@ -21,13 +21,11 @@
 <body>
   <div class="container" style="max-width: 30rem">
     <h1>Login to your account</h1>
-      <div class="alert alert-danger">
-      </div>
       <% if (error) { %>
         <div class="alrt alert-danger">
           <%= error %>
         </div>
-      <%} %>
+      <% } %>
     <form action="/login" method=post>
       <div class="form-group">
         <label>Username</label>

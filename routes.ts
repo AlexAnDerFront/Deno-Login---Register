@@ -1,15 +1,14 @@
 import { RouterContext } from "@oak/oak/router"; 
-import {renderFileToString} from "@hongminhee/dejs";
+import { renderFileToString } from "@hongminhee/dejs";
 import { hashSync, compareSync } from "@da/bcrypt";
 import { users, User } from './users.ts';
-
 
 
 export const home = async  (ctx: RouterContext) => {
     ctx.response.body = await renderFileToString(`${Deno.cwd()}/views/home.ejs`, {});
 }
 export const login = async  (ctx: RouterContext) => {
-    ctx.response.body = await renderFileToString(`${Deno.cwd()}/views/login.ejs`, {});
+    ctx.response.body = await renderFileToString(`${Deno.cwd()}/views/login.ejs`, { error: false, });
 }
 export const register = async  (ctx: RouterContext) => {
     ctx.response.body = await renderFileToString(`${Deno.cwd()}/views/register.ejs`, {});
@@ -24,15 +23,21 @@ export const postLogin = async (ctx: RouterContext) => {
     const password = formData.get("password");
 
     const user = users.find((u: User) => u.username === username);
+
+    const wait = (t = 1000) => new Promise(r => setTimeout(r, t)); // OWAS Requirement für schutz von Timebased Attacks
+
     if (!user) {
         ctx.response.body = await renderFileToString(
         `${Deno.cwd()}/views/login.ejs`,
         { error: "Incorrect username"},
         );
+
+        await wait();
     } else if (!compareSync(password, user.password)) {
         ctx.response.body = await renderFileToString(`${Deno.cwd()}/views/login.ejs`,
          {error: "Incorrect password"},
         );
+        await wait();
     } else {
       console.log("Success"); 
     }
