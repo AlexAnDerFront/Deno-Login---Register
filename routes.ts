@@ -2,14 +2,22 @@ import { RouterContext } from "@oak/oak/router";
 import { renderFileToString } from "@hongminhee/dejs";
 import { hashSync, compareSync } from "@da/bcrypt";
 import { create, Header, Payload } from "@zaubrik/djwt";
-import { users, User } from './users.ts';
+import { users, User } from "./users.ts";
 
 const key = await crypto.subtle.generateKey(
     { name: "HMAC", hash: "SHA-256" },
     true,
     ["sign", "verify"],
   );
-  
+console.log(key);
+
+try {
+  await Deno.writeTextFile(".env", `JWT-Key:${key}`);
+  console.log("Key written to .env file");
+} catch (error) {
+  console.error("Failed to write to .env file:", error);
+}
+
 const header: Header = {
     alg: 'HS256',
     typ: 'JWT'

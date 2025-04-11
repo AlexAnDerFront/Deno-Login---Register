@@ -1,7 +1,7 @@
 import { Application } from "jsr:@oak/oak/application";
 import { Router } from "jsr:@oak/oak/router";
-import {home, login, register, protectedRoute, postLogin, postRegister, logout } from "./routes.ts"
-import { userMiddleware } from "/userMiddleware.ts"
+import { home, login, register, protectedRoute, postLogin, postRegister, logout } from "./routes.ts"
+import  userMiddleware  from "./userMiddleware.ts"
 
 const app = new Application();
 const router = new Router();            
