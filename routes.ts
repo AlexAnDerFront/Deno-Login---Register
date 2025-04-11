@@ -53,7 +53,7 @@ export const postLogin = async (ctx: RouterContext) => {
       console.log("Success"); 
       const payload: Payload = {
         iss: user.name,
-        exp: new Date().getTime() + 120000
+        exp: new Date().getTime() + 1200
       };
       const jwt = await create(header, payload, key);
       ctx.cookies.set('jwt', jwt)
